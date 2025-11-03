@@ -12,17 +12,29 @@
 </head>
 <body>
 <div class="container page-layout">
-<header class="site-header">
-    <div class="container header-inner">
-        <a class="brand" href="index.html">Anime Wiki</a>
-        <nav class="main-nav">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="attack-on-titan.html" class="nav-link">Attack on Titan</a>
-            <a href="takopi.html" class="nav-link">Takopi's Original Sin</a>
-            <a href="lord-of-mysteries.html" class="nav-link active">Lord of Mysteries</a>
-        </nav>  
-    </div>
-</header>
+    <header class="site-header" id="top-banner">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Anime Wiki</a>
+            <div class="nav-wrap">
+                <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="attack-on-titan.html" class="nav-link">Attack on Titan</a>
+                    <a href="takopi.html" class="nav-link">Takopi's Original Sin</a>
+                    <a href="lord-of-mysteries.html" class="nav-link">Lord of Mysteries</a>
+                </nav>
+                <div class="search-container" aria-hidden="false">
+                    <label for="search-input" class="visually-hidden">Search site</label>
+                    <input id="search-input" type="search" placeholder="Search anime, FAQs, gallery..." aria-label="Search" autocomplete="off" />
+                    <ul id="suggestions" class="suggestions" role="listbox" aria-hidden="true"></ul>
+                </div>
+                <div id="date-time" class="date-time" aria-live="polite" aria-atomic="true" title="Current date and time"></div>
+                <button id="bg-btn" class="bg-btn" type="button" aria-pressed="false" title="BOOOOO!!!">
+                    <span class="bg-icon" aria-hidden="true">⟲</span>
+                    <span class="bg-label">Bg</span>
+                </button>
+            </div>
+        </div>
+    </header>
 <main class="container">
     <article class="anime-page">
             <div>
@@ -100,5 +112,6 @@
 </footer>
 </div>
 <script src="lom.js"></script>
+<script src="main.js"></script>
 </body>
 </html>

@@ -929,3 +929,44 @@ html, body {
     font-size: 0.95rem;
     color: var(--muted);
 }
+body.light-theme {
+    background-color: #fdfdfd !important;
+    color: #1a1a1a !important;
+}
+
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4,
+body.light-theme h5,
+body.light-theme h6,
+body.light-theme p,
+body.light-theme span,
+body.light-theme a,
+body.light-theme .stat-card h3,
+body.light-theme .stat-card p,
+body.light-theme .anime-card h3,
+body.light-theme .anime-card p,
+body.light-theme .anime-card a {
+    color: #1a1a1a !important;
+}
+
+body.light-theme a:hover,
+body.light-theme .nav-link.active,
+body.light-theme .nav-link:hover {
+    color: #0077ff !important;
+}
+
+body.light-theme .site-header,
+body.light-theme .site-footer {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+body.light-theme .card,
+body.light-theme .anime-card {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}

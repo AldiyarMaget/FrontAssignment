@@ -472,3 +472,36 @@ $(function () {
         });
     });
 })(jQuery);
+
+(function() {
+  const root = document.documentElement;
+  const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a, li, span, strong, .muted, .subtitle, .answer');
+
+  function isLightColor(color) {
+    const rgb = color.match(/\d+/g);
+    if (!rgb) return false;
+    const [r, g, b] = rgb.map(Number);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness > 160;
+  }
+
+  function adjustTextColor() {
+    const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
+    if (!bg) return;
+    const temp = document.createElement('div');
+    temp.style.color = bg;
+    document.body.appendChild(temp);
+    const bgColor = getComputedStyle(temp).color;
+    document.body.removeChild(temp);
+
+    const isLight = isLightColor(bgColor);
+    textElements.forEach(el => {
+      el.style.color = isLight ? '#111' : '';
+    });
+  }
+
+  const observer = new MutationObserver(adjustTextColor);
+  observer.observe(root, { attributes: true, attributeFilter: ['style'] });
+
+  adjustTextColor();
+})();
