@@ -12,59 +12,59 @@ contactWindow.addEventListener('submit', function(event) {
     const btn = document.getElementById('submitBtn')
     formValidationMessage.textContent = '';
     if (nameInput.value.trim() === '' || emailInput.value.trim() === '' || messageInput.value.trim() === '') {
-        
+
         formValidationMessage.textContent = 'Заполните все поля формы.';
         formValidationMessage.style.color = 'red';
         $('.validation-message').fadeIn(400).delay(2000).fadeOut(400)
         return;
     }
     else {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner">⏳</span> Please wait...';
-      setTimeout(() => {
-    btn.disabled = false;
-    btn.textContent = 'Send';
-    formValidationMessage.textContent = 'Форма принята!';
-    formValidationMessage.style.color = 'green';
-    $('.validation-message').fadeIn(400).delay(2000).fadeOut(400)
-  }, 2000);
-}
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner">⏳</span> Please wait...';
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = 'Send';
+            formValidationMessage.textContent = 'Форма принята!';
+            formValidationMessage.style.color = 'green';
+            $('.validation-message').fadeIn(400).delay(2000).fadeOut(400)
+        }, 2000);
+    }
 });
 
 
 
 accordionHeaders.forEach(header => {
-  header.addEventListener('click', () => {
-    const content = header.nextElementSibling;
+    header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
 
-    header.classList.toggle('active');
+        header.classList.toggle('active');
 
-    if (header.classList.contains('active')) {
-      content.style.maxHeight = content.scrollHeight + 'px';
-    } else {
-      content.style.maxHeight = 0;
-    }
+        if (header.classList.contains('active')) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+            content.style.maxHeight = 0;
+        }
 
-    accordionHeaders.forEach(otherHeader => {
-      if (otherHeader !== header) {
-        otherHeader.classList.remove('active');
-        otherHeader.nextElementSibling.style.maxHeight = 0;
-      }
+        accordionHeaders.forEach(otherHeader => {
+            if (otherHeader !== header) {
+                otherHeader.classList.remove('active');
+                otherHeader.nextElementSibling.style.maxHeight = 0;
+            }
+        });
     });
-  });
 });
 
 
 contactBtn.addEventListener('click', () => {
-  contactWindow.style.display = 'flex';
+    contactWindow.style.display = 'flex';
 });
 contactClose.addEventListener('click', () => {
-  contactWindow.style.display = 'none';
+    contactWindow.style.display = 'none';
 });
 window.addEventListener('click', (event) => {
-  if (event.target === contactWindow) {
-    contactWindow.style.display = 'none';
-  }
+    if (event.target === contactWindow) {
+        contactWindow.style.display = 'none';
+    }
 });
 
 
@@ -145,7 +145,7 @@ $(document).ready(function(){
 
 $(function (){
     const piska = $('.piska').hide().text('киря мальенкая писька🤏').show(5000).hide(50000);
-    $('.nav-wrap').hide().show(1000);
+    $('.site-header').hide().slideDown(1000);
 });
 
 $(function () {
@@ -474,34 +474,200 @@ $(function () {
 })(jQuery);
 
 (function() {
-  const root = document.documentElement;
-  const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a, li, span, strong, .muted, .subtitle, .answer');
+    const root = document.documentElement;
+    const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, a, li, span, strong, .muted, .subtitle, .answer');
 
-  function isLightColor(color) {
-    const rgb = color.match(/\d+/g);
-    if (!rgb) return false;
-    const [r, g, b] = rgb.map(Number);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness > 160;
-  }
+    function isLightColor(color) {
+        const rgb = color.match(/\d+/g);
+        if (!rgb) return false;
+        const [r, g, b] = rgb.map(Number);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness > 160;
+    }
 
-  function adjustTextColor() {
-    const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
-    if (!bg) return;
-    const temp = document.createElement('div');
-    temp.style.color = bg;
-    document.body.appendChild(temp);
-    const bgColor = getComputedStyle(temp).color;
-    document.body.removeChild(temp);
+    function adjustTextColor() {
+        const bg = getComputedStyle(root).getPropertyValue('--bg').trim();
+        if (!bg) return;
+        const temp = document.createElement('div');
+        temp.style.color = bg;
+        document.body.appendChild(temp);
+        const bgColor = getComputedStyle(temp).color;
+        document.body.removeChild(temp);
 
-    const isLight = isLightColor(bgColor);
-    textElements.forEach(el => {
-      el.style.color = isLight ? '#111' : '';
+        const isLight = isLightColor(bgColor);
+        textElements.forEach(el => {
+            el.style.color = isLight ? '#111' : '';
+        });
+    }
+
+    const observer = new MutationObserver(adjustTextColor);
+    observer.observe(root, { attributes: true, attributeFilter: ['style'] });
+
+    adjustTextColor();
+})();
+
+(function () {
+    'use strict';
+
+    const THEME_KEY = 'siteThemeMode';
+
+    function createThemeToggle() {
+        const container = document.querySelector('.nav-wrap');
+        if (!container) return null;
+
+        if (document.getElementById('theme-toggle')) return document.getElementById('theme-toggle');
+
+        const btn = document.createElement('button');
+        btn.id = 'theme-toggle';
+        btn.type = 'button';
+        btn.className = 'bg-btn';
+        btn.setAttribute('aria-pressed', 'false');
+        btn.setAttribute('title', 'Toggle light / dark mode');
+        btn.innerHTML = '<span class="bg-icon" aria-hidden="true">🌓</span><span class="bg-label">Theme</span>';
+        container.appendChild(btn);
+        return btn;
+    }
+
+    function applyTheme(mode) {
+        const isLight = mode === 'light';
+        document.body.classList.toggle('light-theme', isLight);
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.setAttribute('aria-pressed', String(isLight));
+        try {
+            localStorage.setItem(THEME_KEY, mode);
+        } catch (e) {}
+        document.documentElement.style.scrollBehavior = 'auto';
+    }
+
+    function getSavedTheme() {
+        try {
+            const saved = localStorage.getItem(THEME_KEY);
+            if (saved === 'light' || saved === 'dark') return saved;
+        } catch (e) {}
+        try {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+        } catch (e) {}
+        return 'dark';
+    }
+
+    const btn = createThemeToggle();
+    if (!btn) return;
+
+    const initial = getSavedTheme();
+    applyTheme(initial);
+
+    btn.addEventListener('click', () => {
+        const current = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        const next = current === 'light' ? 'dark' : 'light';
+        applyTheme(next);
     });
-  }
+})();
 
-  const observer = new MutationObserver(adjustTextColor);
-  observer.observe(root, { attributes: true, attributeFilter: ['style'] });
 
-  adjustTextColor();
+(function () {
+    'use strict';
+
+    const svgPlaceholder = function (label) {
+        const text = label ? label.replace(/</g, '&lt;') : 'Image';
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'>
+            <rect width='100%' height='100%' fill='#0b1220'/>
+            <text x='50%' y='50%' fill='#9fb7d8' font-family='sans-serif' font-size='20' dominant-baseline='middle' text-anchor='middle'>${text} — failed to load</text>
+        </svg>`;
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    };
+
+    function guardImages() {
+        const imgs = Array.from(document.querySelectorAll('img'));
+        if (!imgs.length) return;
+
+        imgs.forEach(img => {
+            if (!img.hasAttribute('alt') || img.getAttribute('alt').trim() === '') {
+                img.setAttribute('alt', 'Gallery image');
+            }
+
+            img.addEventListener('error', function () {
+                this.dataset.broken = 'true';
+                this.classList.add('img-broken');
+                if (!this.classList.contains('img-placeholder-applied')) {
+                    this.src = svgPlaceholder(this.getAttribute('alt') || 'Image');
+                    this.classList.add('img-placeholder-applied');
+                }
+                console.warn('Image failed to load, replaced with placeholder:', this);
+            });
+
+            img.addEventListener('load', function () {
+                try {
+                    if (this.naturalWidth && this.naturalHeight) {
+                        if (this.naturalWidth < 60 || this.naturalHeight < 60) {
+                            console.warn('Very small image detected (may appear low-quality):', this.src);
+                        }
+                    }
+                } catch (e) {}
+            });
+
+            if (/^https?:\/\//i.test(img.src) && (new URL(img.src, location.href)).origin !== location.origin) {
+                fetch(img.src, { method: 'HEAD', mode: 'cors' }).then(resp => {
+                    if (!resp.ok) {
+                        console.warn('Remote image returned non-ok status:', resp.status, img.src);
+                    } else {
+                        const len = resp.headers.get('content-length');
+                        if (len && Number(len) > 1024 * 500) { // > ~500kb
+                            console.info('Remote image is large (>500KB):', img.src, 'size:', len);
+                        }
+                    }
+                }).catch(err => {
+                    console.info('Could not HEAD remote image (CORS or network):', img.src);
+                });
+            }
+        });
+    }
+
+    function guardMedia() {
+        const medias = Array.from(document.querySelectorAll('audio,video'));
+        if (!medias.length) return;
+
+        medias.forEach(m => {
+            if (!m.hasAttribute('controls')) m.setAttribute('controls', '');
+
+            try { m.load(); } catch (e) { /* ignore */ }
+
+            m.addEventListener('error', function (ev) {
+                console.warn('Media element error:', this, ev);
+            });
+
+            if (m.tagName.toLowerCase() === 'video') {
+                m.addEventListener('loadeddata', function () {
+                    // muted autoplay not requested; just note availability
+                    console.info('Video loaded successfully:', this.currentSrc || this.src);
+                });
+            }
+        });
+    }
+
+    (function injectRuntimeCss() {
+        const css = `
+.img-broken {
+    opacity: 0.9;
+    filter: grayscale(10%);
+    object-fit: cover;
+}
+
+:root, body {
+    transition: background-color 220ms ease, color 220ms ease;
+}
+`;
+        try {
+            const s = document.createElement('style');
+            s.setAttribute('data-added-by', 'task5-runtime');
+            s.appendChild(document.createTextNode(css));
+            document.head.appendChild(s);
+        } catch (e) {}
+    })();
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(() => { guardImages(); guardMedia(); }, 50);
+    } else {
+        document.addEventListener('DOMContentLoaded', () => { guardImages(); guardMedia(); });
+    }
+
 })();

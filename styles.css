@@ -268,33 +268,33 @@ body {
 }
 
 .form-window {
-  display: none; 
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #071023;
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #071023;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-container {
-  background: #071f42;
-  padding: 30px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 15px #081022;
-  position: relative;
+    background: #071f42;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 15px #081022;
+    position: relative;
 }
 .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 40px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 40px;
+    cursor: pointer;
 }
 
 form.form-container input[type="text"],
@@ -534,35 +534,35 @@ form.form-container button:hover {
 }
 
 .faq {
-  width: 600px;
+    width: 600px;
 
 }
 .faq-question {
-  width: 100%;
-  text-align: left;
-  padding: 15px;
-  border: none;
-  background-color: #071f42;
-  color: #ffffff;
-  outline: none;
-  cursor: pointer;
-  font-size: 23px;
-  border-radius: 8px;
-  margin-top: 10px;
-  transition: background-color 0.2s;
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+    border: none;
+    background-color: #071f42;
+    color: #ffffff;
+    outline: none;
+    cursor: pointer;
+    font-size: 23px;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: background-color 0.2s;
 }
 
 .faq-question:hover {
-  background-color: #083a70;
+    background-color: #083a70;
 }
 
 .answer {
-  max-height: 25px;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  font-size: 20px;
-  color: #ffffff;
-  padding: 0 15px;
+    max-height: 25px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 0 15px;
 }
 
 .bg-btn {
@@ -969,4 +969,67 @@ body.light-theme .anime-card {
     background-color: #ffffff !important;
     color: #1a1a1a !important;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* ---------------------------
+   Task 6: Light mode variable overrides and small polish
+   (вставить в конец styles.css)
+   --------------------------- */
+
+/* Smooth theme switch visuals */
+html, body {
+    transition: background-color 240ms ease, color 240ms ease;
+}
+
+/* Light theme variables — applied when body.light-theme exists */
+body.light-theme {
+    --bg: #ffffff;
+    --surface: #f6f7fb;
+    --card: #ffffff;
+    --accent: #0077ff;
+    --accent-2: #6d28d9;
+    --text: #111827;
+    --muted: #6b7280;
+    --glass: rgba(0,0,0,0.04);
+}
+
+/* Ensure elements that used hard-coded colors also respect theme */
+body.light-theme #search-input {
+    background: #ffffff;
+    color: var(--text);
+    border-color: rgba(0,0,0,0.06);
+}
+
+/* Make sure header/footer contrast in light theme */
+body.light-theme .site-header,
+body.light-theme .site-footer {
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Readability for badges/overlays */
+body.light-theme .gallery-item .overlay {
+    background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.9));
+    color: var(--text);
+}
+
+body.light-theme .read-more {
+    color: var(--accent);
+    background: rgba(0,0,0,0.03);
+}
+
+body.light-theme .suggestions {
+    background: #ffffff;
+    color: #111;
+}
+
+/* Styling for the dynamically inserted toggle button (match existing .bg-btn) */
+#theme-toggle {
+    min-width: 56px;
+}
+
+/* Accessibility: focus ring for keyboard users */
+#theme-toggle:focus, .bg-btn:focus {
+    outline: 3px solid rgba(100,149,237,0.18);
+    outline-offset: 2px;
 }
