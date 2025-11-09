@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container page-layout">
+<div class="page-layout">
     <header class="site-header" id="top-banner">
         <div class="header-inner">
             <a class="brand" href="index.html">Anime Wiki</a>
@@ -21,6 +21,11 @@
                     <a href="takopi.html" class="nav-link active">Takopi's Original Sin</a>
                     <a href="lord-of-mysteries.html" class="nav-link">Lord of Mysteries</a>
                 </nav>
+                <div class="search-container" aria-hidden="false">
+                    <label for="search-input" class="visually-hidden">Search site</label>
+                    <input id="search-input" type="search" placeholder="Search anime, FAQs, gallery..." aria-label="Search" autocomplete="off" />
+                    <ul id="suggestions" class="suggestions" role="listbox" aria-hidden="true"></ul>
+                </div>
             </div>
         </div>
     </header>
@@ -100,6 +105,7 @@
     </div>
 </footer>
 </div>
-
+<script src="search.js"></script>
+<script src="theme.js"></script>
 </body>
 </html>

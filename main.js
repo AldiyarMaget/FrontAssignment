@@ -68,76 +68,9 @@ window.addEventListener('click', (event) => {
 });
 
 
-(function() {
-    const btn = document.getElementById('bg-btn');
-    if (!btn) return;
 
-    const colors = [
-        '#071023',
-        '#0f1724',
-        '#082032',
-        '#1b2430',
-        '#f5efe6',
-        '#083a70'
-    ];
 
-    let index = 0;
-    try {
-        const saved = localStorage.getItem('bgColorIndex');
-        if (saved !== null && !isNaN(Number(saved))) index = Number(saved) % colors.length;
-    } catch (e) {
-    }
 
-    function applyColor(i) {
-        const root = document.documentElement;
-        const color = colors[i % colors.length];
-        root.style.setProperty('--bg', color);
-        try { localStorage.setItem('bgColorIndex', String(i % colors.length)); } catch (e) {}
-    }
-
-    applyColor(index);
-
-    btn.addEventListener('click', () => {
-        index = (index + 1) % colors.length;
-        applyColor(index);
-        btn.setAttribute('aria-pressed', index % 2 === 1 ? 'true' : 'false');
-    });
-})();
-
-(function() {
-    const el = document.getElementById('date-time');
-    if (!el) return;
-
-    const options = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-    };
-    function formatDateTime(dt) {
-        try {
-            return dt.toLocaleString('en-US', options);
-        } catch (e) {
-            const year = dt.getFullYear();
-            const month = dt.toLocaleString('en-US', { month: 'long' });
-            const day = dt.getDate();
-            let hours = dt.getHours();
-            const minutes = String(dt.getMinutes()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-            return `${month} ${day}, ${year}, ${hours}:${minutes} ${ampm}`;
-        }
-    }
-    function update() {
-        const now = new Date();
-        el.textContent = formatDateTime(now);
-    }
-    update();
-    const timer = setInterval(update, 1000);
-    window.addEventListener('beforeunload', () => clearInterval(timer));
-})();
 
 $(document).ready(function(){
     console.log("jQuery is ready!");
@@ -149,7 +82,7 @@ $(function (){
 });
 
 $(function () {
-    function huinaRegul(string) {
+    function Regul(string) {
         return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
     }
 
@@ -202,7 +135,7 @@ $(function () {
                 });
                 return;
             }
-            const re = new RegExp('(' + huinaRegul(query) + ')', 'ig');
+            const re = new RegExp('(' + Regul(query) + ')', 'ig');
             $highlightTargets.each(function () {
                 const $el = $(this);
                 const orig = $el.data('origHtml') || $el.html();
@@ -506,62 +439,62 @@ $(function () {
     adjustTextColor();
 })();
 
-(function () {
-    'use strict';
-
-    const THEME_KEY = 'siteThemeMode';
-
-    function createThemeToggle() {
-        const container = document.querySelector('.nav-wrap');
-        if (!container) return null;
-
-        if (document.getElementById('theme-toggle')) return document.getElementById('theme-toggle');
-
-        const btn = document.createElement('button');
-        btn.id = 'theme-toggle';
-        btn.type = 'button';
-        btn.className = 'bg-btn';
-        btn.setAttribute('aria-pressed', 'false');
-        btn.setAttribute('title', 'Toggle light / dark mode');
-        btn.innerHTML = '<span class="bg-icon" aria-hidden="true">🌓</span><span class="bg-label">Theme</span>';
-        container.appendChild(btn);
-        return btn;
-    }
-
-    function applyTheme(mode) {
-        const isLight = mode === 'light';
-        document.body.classList.toggle('light-theme', isLight);
-        const btn = document.getElementById('theme-toggle');
-        if (btn) btn.setAttribute('aria-pressed', String(isLight));
-        try {
-            localStorage.setItem(THEME_KEY, mode);
-        } catch (e) {}
-        document.documentElement.style.scrollBehavior = 'auto';
-    }
-
-    function getSavedTheme() {
-        try {
-            const saved = localStorage.getItem(THEME_KEY);
-            if (saved === 'light' || saved === 'dark') return saved;
-        } catch (e) {}
-        try {
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-        } catch (e) {}
-        return 'dark';
-    }
-
-    const btn = createThemeToggle();
-    if (!btn) return;
-
-    const initial = getSavedTheme();
-    applyTheme(initial);
-
-    btn.addEventListener('click', () => {
-        const current = document.body.classList.contains('light-theme') ? 'light' : 'dark';
-        const next = current === 'light' ? 'dark' : 'light';
-        applyTheme(next);
-    });
-})();
+// (function () {
+//     'use strict';
+//
+//     const THEME_KEY = 'siteThemeMode';
+//
+//     function createThemeToggle() {
+//         const container = document.querySelector('.nav-wrap');
+//         if (!container) return null;
+//
+//         if (document.getElementById('theme-toggle')) return document.getElementById('theme-toggle');
+//
+//         const btn = document.createElement('button');
+//         btn.id = 'theme-toggle';
+//         btn.type = 'button';
+//         btn.className = 'bg-btn';
+//         btn.setAttribute('aria-pressed', 'false');
+//         btn.setAttribute('title', 'Toggle light / dark mode');
+//         btn.innerHTML = '<span class="bg-icon" aria-hidden="true">🌓</span><span class="bg-label">Theme</span>';
+//         container.appendChild(btn);
+//         return btn;
+//     }
+//
+//     function applyTheme(mode) {
+//         const isLight = mode === 'light';
+//         document.body.classList.toggle('light-theme', isLight);
+//         const btn = document.getElementById('theme-toggle');
+//         if (btn) btn.setAttribute('aria-pressed', String(isLight));
+//         try {
+//             localStorage.setItem(THEME_KEY, mode);
+//         } catch (e) {}
+//         document.documentElement.style.scrollBehavior = 'auto';
+//     }
+//
+//     function getSavedTheme() {
+//         try {
+//             const saved = localStorage.getItem(THEME_KEY);
+//             if (saved === 'light' || saved === 'dark') return saved;
+//         } catch (e) {}
+//         try {
+//             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
+//         } catch (e) {}
+//         return 'dark';
+//     }
+//
+//     const btn = createThemeToggle();
+//     if (!btn) return;
+//
+//     const initial = getSavedTheme();
+//     applyTheme(initial);
+//
+//     btn.addEventListener('click', () => {
+//         const current = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+//         const next = current === 'light' ? 'dark' : 'light';
+//         applyTheme(next);
+//     });
+// })();
 
 
 (function () {
