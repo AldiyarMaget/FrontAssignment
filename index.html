@@ -38,7 +38,12 @@
             <h1 class="hero-title">Discover, read, and explore anime</h1>
             <p class="hero-sub">A compact fan-driven wiki for selected series. Clean design, easy reading, and focused summaries.</p>
             <p class="piska"></p>
+            <div id="random-anime" class="random-anime" aria-live="polite"></div>
+            <div style="text-align:center; margin-top:12px;">
+                <button id="random-btn" class="form-button" type="button" aria-controls="random-anime">Surprise me</button>
+            </div>
         </section>
+
         <section class="stats-section" aria-label="Site statistics">
             <div class="stats-grid">
                 <div class="stat">
@@ -55,6 +60,7 @@
                 </div>
             </div>
         </section>
+
         <section class="featured">
             <h2 class="section-title">Featured Anime</h2>
             <div class="grid">
@@ -165,6 +171,17 @@
     </main>
     <footer class="site-footer">
         <div class="container footer-inner">
+            <section id="api-search" aria-label="External anime search">
+                <h2 style="margin:0 0 8px; font-size:1rem;">Search (external)</h2>
+                <div class="search-row" style="display:flex; gap:8px; align-items:center;">
+                    <input id="api-search-input" placeholder="Search anime via Jikan..." aria-label="Search anime via Jikan">
+                    <button id="api-search-btn" class="form-button" type="button">Search Web</button>
+                </div>
+                <div id="api-results" class="grid" style="margin-top:12px;"></div>
+                <div style="text-align:center; margin-top:10px;">
+                    <button id="api-load-more" style="display:none" class="form-button" type="button">Load more</button>
+                </div>
+            </section>
             <div class="team-list">
                 <strong>Team members:</strong>
                 <ul>
@@ -178,6 +195,7 @@
         </div>
     </footer>
 </div>
+<script src="api-jikan.js"></script>
 <script src="theme.js"></script>
 <script src="main.js"></script>
 </body>

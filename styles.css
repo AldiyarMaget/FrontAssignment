@@ -748,9 +748,6 @@ html, body {
     width: 100%;
 }
 
-.validation-message{
-    display: hidden;
-}
 
 .container {
     max-width: 1100px;
@@ -788,8 +785,8 @@ html, body {
     left: 0;
     right: 0;
     max-width: 100%;
-    background: rgba(18,22,28,0.96);     /* dark, semi-opaque background */
-    color: #ffffff;                      /* white text for contrast */
+    background: rgba(18,22,28,0.96);
+    color: #ffffff;
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 8px;
     max-height: 260px;
@@ -844,7 +841,6 @@ html, body {
     border-radius: 2px;
 }
 
-/* ====== Scroll progress bar (Task 4) ====== */
 #scroll-progress-bar {
     position: absolute;
     left: 0;
@@ -859,7 +855,6 @@ html, body {
 }
 
 
-/* small animated shimmer using pseudo element on the bar */
 #scroll-progress {
     position: fixed;
     left: 0;
@@ -884,7 +879,6 @@ html, body {
     mix-blend-mode: overlay;
 }
 
-/* ====== Stats counters (Task 5) ====== */
 .stats-section {
     margin: 26px 0;
     padding: 18px 12px;
@@ -960,17 +954,10 @@ body.light-theme .anime-card {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* ---------------------------
-   Task 6: Light mode variable overrides and small polish
-   (вставить в конец styles.css)
-   --------------------------- */
-
-/* Smooth theme switch visuals */
 html, body {
     transition: background-color 240ms ease, color 240ms ease;
 }
 
-/* Light theme variables — applied when body.light-theme exists */
 body.light-theme {
     --bg: #ffffff;
     --surface: #f6f7fb;
@@ -982,21 +969,18 @@ body.light-theme {
     --glass: rgba(0,0,0,0.04);
 }
 
-/* Ensure elements that used hard-coded colors also respect theme */
 body.light-theme #search-input {
     background: #ffffff;
     color: var(--text);
     border-color: rgba(0,0,0,0.06);
 }
 
-/* Make sure header/footer contrast in light theme */
 body.light-theme .site-header,
 body.light-theme .site-footer {
     background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95)) !important;
     border-bottom: 1px solid rgba(0,0,0,0.04);
 }
 
-/* Readability for badges/overlays */
 body.light-theme .gallery-item .overlay {
     background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,0.9));
     color: var(--text);
@@ -1012,13 +996,66 @@ body.light-theme .suggestions {
     color: #111;
 }
 
-/* Styling for the dynamically inserted toggle button (match existing .bg-btn) */
 #theme-toggle {
     min-width: 56px;
 }
 
-/* Accessibility: focus ring for keyboard users */
 #theme-toggle:focus, .bg-btn:focus {
     outline: 3px solid rgba(100,149,237,0.18);
     outline-offset: 2px;
 }
+
+.random-anime, #api-results {
+    margin-top: 12px;
+    display: grid;
+    gap: 12px;
+}
+
+.api-card {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+    transition: transform .15s ease;
+}
+.api-card:hover { transform: translateY(-4px); }
+
+.api-card-link { display:flex; gap:12px; text-decoration: none; color: inherit; width:100%; }
+
+.api-thumb {
+    width: 160px;
+    height: 110px;
+    flex: 0 0 160px;
+    background: #071022;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.api-thumb img { width:100%; height:100%; object-fit: cover; display:block; }
+
+.api-body { padding: 12px 14px; flex: 1; }
+.api-title { margin: 0 0 6px; font-size: 1rem; }
+.api-synopsis { margin: 0 0 8px; color: var(--muted); font-size: 0.95rem; }
+.api-meta { font-size: 0.9rem; color: var(--muted); }
+
+.api-loading,
+.api-error,
+.api-empty,
+.api-hint { color: var(--muted); padding: 12px; background: rgba(255,255,255,0.01); border-radius: 8px; }
+
+#api-load-more {
+    display: none;
+    margin: 12px auto 0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, var(--accent, #7cdbff), var(--accent-2, #8b5cf6));
+    color: #081022;
+    font-weight: 700;
+    cursor: pointer;
+}
+#api-load-more:disabled { opacity: 0.6; cursor: default; }
