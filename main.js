@@ -454,6 +454,25 @@ $(function () {
             el.style.color = isLight ? '#111' : '';
         });
     }
+    (function() {
+  const root = document.documentElement;
+  const authBtn = document.getElementById('auth-submit');
+
+  function updateButtonColors() {
+    const accent = getComputedStyle(root).getPropertyValue('--accent').trim();
+    const text = getComputedStyle(root).getPropertyValue('--text').trim();
+    if (authBtn) {
+      authBtn.style.background = accent;
+      authBtn.style.color = text;
+    }
+  }
+
+  const observer = new MutationObserver(updateButtonColors);
+  observer.observe(root, { attributes: true, attributeFilter: ['style'] });
+
+  updateButtonColors();
+})();
+
 
     const observer = new MutationObserver(adjustTextColor);
     observer.observe(root, { attributes: true, attributeFilter: ['style'] });
@@ -568,3 +587,90 @@ $(function () {
     }
 
 })();
+
+const authBtn = document.getElementById('auth-toggle');
+const authWindow = document.getElementById('auth-window');
+const authClose = document.getElementById('auth-close');
+const authForm = document.getElementById('auth-form');
+const authTitle = document.getElementById('auth-title');
+const authMessage = document.getElementById('auth-message');
+const authSubmit = document.getElementById('auth-submit');
+const switchMode = document.getElementById('switch-mode');
+const welcomeUser = document.getElementById('welcome-user');
+
+let isRegisterMode = false;
+
+authBtn.addEventListener('click', () => authWindow.style.display = 'flex');
+authClose.addEventListener('click', () => authWindow.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === authWindow) authWindow.style.display = 'none'; });
+
+switchMode.addEventListener('click', (e) => {
+  e.preventDefault();
+  isRegisterMode = !isRegisterMode;
+  authTitle.textContent = isRegisterMode ? 'Register' : 'Login';
+  authSubmit.textContent = isRegisterMode ? 'Sign Up' : 'Login';
+  switchMode.textContent = isRegisterMode ? 'Already have an account? Login' : 'Don’t have an account? Register';
+  authMessage.textContent = '';
+});
+
+authForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const username = document.getElementById('auth-username').value.trim();
+  const password = document.getElementById('auth-password').value.trim();
+
+  if (!username || !password) {
+    showAuthMessage('Please fill in all fields.', 'red');
+    return;
+  }
+
+  const users = JSON.parse(localStorage.getItem('animewiki_users') || '{}');
+
+  if (isRegisterMode) {
+    if (users[username]) {
+      showAuthMessage('User already exists.', 'red');
+      return;
+    }
+    users[username] = { password };
+    localStorage.setItem('animewiki_users', JSON.stringify(users));
+    showAuthMessage('Account created! You can now log in.', 'green');
+    isRegisterMode = false;
+    authTitle.textContent = 'Login';
+    authSubmit.textContent = 'Login';
+    switchMode.textContent = 'Don’t have an account? Register';
+  } else {
+    if (!users[username] || users[username].password !== password) {
+      showAuthMessage('Invalid username or password.', 'red');
+      return;
+    }
+    localStorage.setItem('animewiki_loggedin', username);
+    updateAuthState();
+    authWindow.style.display = 'none';
+  }
+});
+
+function showAuthMessage(msg, color) {
+  authMessage.textContent = msg;
+  authMessage.style.color = color;
+  $(authMessage).fadeIn(300).delay(2000).fadeOut(600);
+}
+
+function updateAuthState() {
+  const user = localStorage.getItem('animewiki_loggedin');
+  if (user) {
+    welcomeUser.textContent = `Welcome, ${user}!`;
+    welcomeUser.style.display = 'block';
+    authBtn.textContent = 'Logout';
+    authBtn.onclick = logoutUser;
+  } else {
+    welcomeUser.style.display = 'none';
+    authBtn.textContent = 'Login / Register';
+    authBtn.onclick = () => authWindow.style.display = 'flex';
+  }
+}
+
+function logoutUser() {
+  localStorage.removeItem('animewiki_loggedin');
+  updateAuthState();
+}
+
+updateAuthState();

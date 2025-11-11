@@ -17,6 +17,26 @@
 <div class="page-layout">
     <header class="site-header" id="top-banner">
         <div class="header-inner">
+    <button id="auth-toggle" class="form-button">Login / Register</button>
+   <div id="auth-window" class="form-window">
+    <form id="auth-form" class="form-container">
+        <span class="close" id="auth-close">&times;</span>
+            <h3 id="auth-title">Login</h3>
+        <label>
+        <input type="text" id="auth-username" placeholder="Username" required>
+            </label>
+            <label>
+             <input type="password" id="auth-password" placeholder="Password" required>
+             </label>
+              <p id="auth-message" class="validation-message"></p>
+              <button type="submit" id="auth-submit">Login</button>
+             <p style="margin-top:10px; font-size:0.9rem;">
+                <a href="#" id="switch-mode">Don’t have an account? Register</a>
+              </p>
+             </form>
+            </div>
+            <p id="welcome-user" style="text-align:center; margin-top:10px; display:none;"></p>
+
             <a class="brand" href="index.html">Anime Wiki</a>
             <div class="nav-wrap">
                 <nav class="main-nav" role="navigation" aria-label="Main navigation">

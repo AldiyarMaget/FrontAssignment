@@ -1,27 +1,17 @@
-$('#copyBtn').on('click', function(){
-    const text = $('#textToCopy').text();
-    navigator.clipboard.writeText(text).then(() => {
-        const btn = $(this);
-        $('#textToCopy').trigger('copy')
-        btn.text('✅')
-        $('#copyMessage').fadeIn(400).delay(1600)
-        setTimeout(() => {
-            btn.text('📋')
-            $('#copyMessage').fadeOut(400)
-        }, 2000)  
-    }    
-)
-}
-)
-$(window).on('scroll', function() {
-  $('.card-media-circular').each(function() {
-    const img = $(this);
-    const top = img.offset().top;
-    const scrollTop = $(window).scrollTop();
-    const windowHeight = $(window).height();
 
-    if (top < scrollTop + windowHeight) {
-      img.attr('src', img.data('src'));
-    }
-  });
-});
+const copyBtn = document.getElementById('copyBtn');
+const copyMessage = document.getElementById('copyMessage');
+const textToCopy = document.getElementById('textToCopy');
+
+if (copyBtn && textToCopy) {
+    copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(textToCopy.textContent.trim())
+            .then(() => {
+                if (copyMessage) {
+                    copyMessage.style.display = 'inline';
+                    setTimeout(() => copyMessage.style.display = 'none', 1500);
+                }
+            })
+            .catch(err => console.error('Failed to copy text: ', err));
+    });
+}
