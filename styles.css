@@ -540,7 +540,7 @@ form.form-container button:hover {
 .faq-question {
     width: 100%;
     text-align: left;
-    padding: 15px;
+    padding: 18px;
     border: none;
     background-color: #071f42;
     color: #ffffff;
@@ -557,7 +557,7 @@ form.form-container button:hover {
 }
 
 .answer {
-    max-height: 25px;
+    max-height: 0px;
     overflow: hidden;
     transition: max-height 0.3s ease;
     font-size: 20px;
