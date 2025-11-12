@@ -530,7 +530,7 @@ form.form-container button:hover {
     font-weight: 700;
     padding: 10px 14px;
     border-radius: 8px;
-    font-size: 25px;
+    font-size: 15px;
 }
 
 .faq {
@@ -632,7 +632,6 @@ form.form-container button:hover {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
-    /* width: auto; (не указываем) */
 }
 
 .main-nav {
@@ -1170,3 +1169,5 @@ body.light-theme .suggestions {
     :root{--max-width:1400px}
     .hero-title{font-size:2.4rem}
 }
+
+
