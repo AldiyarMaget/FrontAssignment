@@ -1,5 +1,5 @@
 [README.md](https://github.com/user-attachments/files/23496260/README.md)
-# Assignment #2 — README
+# AnimeWiki — README
 
 
 ## Team Members
