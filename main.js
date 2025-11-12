@@ -76,10 +76,6 @@ $(document).ready(function(){
     console.log("jQuery is ready!");
 });
 
-$(function (){
-    const piska = $('.piska').hide().text('киря мальенкая писька🤏').show(5000).hide(50000);
-    $('.site-header').hide().slideDown(1000);
-});
 
 $(function () {
     function Regul(string) {
